@@ -1,0 +1,7 @@
+1. CONSIDERAR UM PROCESSADOR SEM FORWARDING (5-stage processor w/o forwarding or hazard detection)
+   1A. Identificar os hazards [2 pontos]
+   1B. Resolver com NOPs [1 ponto]
+   1C. Reordenar as instruções de forma a reduzir o numero de NOPs [1 ponto]
+
+2. CONSIDERAR UM PROCESSADOR COM FORWARDING
+   Comparar a estatística (IPC, racio instruções uteis/total) de 1B, 1C no processador original (5-stage processor w/o forwarding or hazard detection) e completo (5-stage processor) [1 ponto]
