@@ -32,7 +32,8 @@
 # Data section
 # IMPORTANT: do not change this section
 .data
-
+a:    .word   3, 5, -6, 6, -7, 7, 10, 1, 2, 2, -2, -1
+b:    .word   15, -13, 12, -11, 11, 8, 4, 8, 8, 5, 2, 2
 ran:  .word   1 
 res:  .zero   4
 N:    .word   12
