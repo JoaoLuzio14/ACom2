@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// CONSIDERAR UM PROCESSADOR DE CICLO ⁄NICO E UMA CACHE BASE (RV32)
+// CONSIDERAR UM PROCESSADOR DE CICLO √öNICO E UMA CACHE BASE (RV32)
+// Pol√≠ticas de Write-Back e Write-Allocate, LRU
 
-// 1 - indicar a decomposiÁ„o do endereÁo em tag, index e offset [1 ponto]
-// Dimens„o total da cache : 2kB
+// 1 - indicar a decomposi√ß√£o do endere√ßo em tag, index e offset [1 ponto]
+// Dimens√£o total da cache : 2kB
 // Vias : 1
 // Linhas : 256
 
@@ -12,9 +13,9 @@
 // Seja M uma matriz NxM, onde &(M[0][0]) = 0x10000100, N = 8, M = 16
 // M[0][12] , M[7][5] (qual linha? qual offset?)
 
-// 3 - determinar hit rate da funÁ„o 'MulSum' (simulaÁ„o/teoricamente) [1 ponto]
-// 4 - alterar o cÛdigo C de forma a reduzir o miss rate [1 ponto]
-// 5 - Que configuraÁ„o da cache origina um melhor desempenho? [1 pontos]
+// 3 - determinar hit rate da fun√ß√£o 'MulSum' (simula√ß√£o/teoricamente) [1 ponto]
+// 4 - alterar o c√≥digo C de forma a reduzir o miss rate [1 ponto]
+// 5 - Que configura√ß√£o da cache origina um melhor desempenho? [1 pontos]
 
 /*******************************************************************************
  * Definicao de constantes e macros
@@ -23,14 +24,14 @@
 #define N 128
 
 /*******************************************************************************
- * DeclaraÁ„o de vari·veis globais
+ * Declara√ß√£o de vari√°veis globais
 *******************************************************************************/
 int vect1[N] = {50, 60, 30, 50, 40, 60, 100, 80, 90, 80, 10, 90, 60, 70, 50, 00, 40, 30, 60, 100, 40, 70, 60, 80, 40, 90, 20, 90, 60, 100, 70, 90, 00, 00, 90, 60, 20, 00, 40, 80, 100, 10, 30, 40, 00, 60, 30, 100, 20, 80, 50, 30, 90, 30, 100, 40, 50, 30, 00, 80, 50, 90, 90, 60, 100, 30, 100, 20, 90, 100, 40, 100, 40, 40, 100, 00, 60, 30, 100, 60, 70, 10, 90, 80, 00, 80, 50, 90, 70, 20, 90, 90, 10, 40, 50, 10, 30, 40, 00, 100, 20, 60, 40, 10, 80, 30, 60, 10, 20, 30, 10, 80, 100, 10, 60, 60, 10, 70, 70, 90, 10, 40, 40, 70, 70, 00, 90, 30};
 int vect2[N] = {20, 80, 50, 80, 50, 70, 90, 20, 20, 100, 60, 20, 50, 100, 90, 20, 50, 80, 80, 100, 50, 00, 70, 80, 10, 40, 70, 40, 00, 90, 10, 70, 50, 20, 00, 100, 40, 40, 10, 100, 30, 90, 20, 00, 20, 00, 100, 00, 40, 30, 10, 30, 20, 00, 80, 60, 90, 20, 40, 60, 50, 60, 70, 00, 00, 90, 40, 80, 40, 10, 40, 60, 30, 00, 00, 80, 80, 30, 90, 30, 20, 80, 20, 70, 80, 100, 100, 80, 60, 40, 90, 80, 30, 10, 80, 80, 70, 100, 50, 100, 60, 70, 50, 10, 50, 70, 80, 00, 20, 80, 40, 40, 70, 10, 40, 100, 40, 20, 50, 10, 90, 70, 30, 90, 90, 00, 80, 00};
 int vect3[N] = {40, 30, 80, 60, 50, 90, 60, 80, 90, 20, 20, 80, 70, 50, 100, 70, 70, 60, 50, 40, 80, 00, 80, 90, 80, 40, 50, 90, 70, 20, 70, 40, 60, 00, 40, 20, 80, 30, 80, 50, 50, 80, 10, 10, 00, 60, 100, 80, 20, 20, 30, 20, 60, 10, 90, 90, 50, 40, 30, 80, 70, 20, 90, 00, 80, 20, 30, 40, 20, 50, 100, 30, 10, 80, 80, 100, 50, 30, 30, 70, 90, 30, 90, 90, 20, 70, 70, 50, 20, 70, 20, 40, 80, 90, 100, 50, 90, 00, 100, 60, 50, 70, 20, 60, 100, 70, 50, 90, 20, 30, 10, 80, 80, 100, 100, 70, 60, 80, 30, 40, 50, 00, 60, 40, 70, 90, 00, 10};
 
 /*******************************************************************************
- * DeclaraÁ„o de funÁıes
+ * Declara√ß√£o de fun√ß√µes
 *******************************************************************************/
 void MulSum(int *, int *, int *);
 
@@ -39,7 +40,7 @@ void MulSum(int *, int *, int *);
 *******************************************************************************/
 void MulSum(register int *A, register int *B, register int *C)
 {
-    // a keyword register pede ao compilador para alocar as vari·veis em registos
+    // a keyword register pede ao compilador para alocar as vari√°veis em registos
     register int i, j, m, n, idx;
     n = N/16;
     m = 2*n;
