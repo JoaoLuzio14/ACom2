@@ -47,8 +47,7 @@ void MulSum(register int *A, register int *B, register int *C)
 
     for (i = 0; i < n; i++) {
         for (j = 0; j < m; j ++) {
-            idx = i*m+j;
-            C[idx] = A[idx]*B[idx]*(A[idx]+B[idx]);
+            C[i*m+j] = A[i*m+j]*B[i*m+j]*(A[i*m+j]+B[i*m+j]);
         }
     }
 
